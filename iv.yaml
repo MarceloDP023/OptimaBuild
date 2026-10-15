@@ -1,2 +1,2 @@
-lenguaje: rust
-entidad: src/dominio/personaje.rs
+lenguaje: ruby
+entidad: src/dominio/personaje.rb
