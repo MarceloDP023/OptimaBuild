@@ -4,7 +4,7 @@ require_relative 'arbol_talentos'
 
 module OptimaBuild
   class ClasePersonaje
-    attr_reader :id, :nombre, :arbol_talentos
+    attr_reader :nombre, :arbol_talentos
 
     def initialize(nombre:, arbol_talentos:)
       raise ArgumentError, 'El nombre de la clase debe ser una cadena de texto' unless nombre.is_a?(String)
