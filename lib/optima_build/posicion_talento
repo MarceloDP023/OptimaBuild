@@ -1,0 +1,13 @@
+module OptimaBuild
+  class PosicionTalento
+    attr_reader :fila, :columna
+
+    def initialize(fila:, columna:)
+      raise ArgumentError, "La fila no puede ser negativa" if fila < 0
+      raise ArgumentError, "La columna no puede ser negativa" if columna < 0
+
+      @fila = fila
+      @columna = columna
+    end
+  end
+end
