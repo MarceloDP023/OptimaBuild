@@ -23,5 +23,9 @@ module OptimaBuild
       @nombre = nombre
       @talentos = talentos
     end
+
+    def puntos_invertidos
+      @talentos.sum { |talento| talento.rango.actual }
+    end
   end
 end
