@@ -1,2 +1,2 @@
 lenguaje: ruby
-entidad: src/dominio/personaje.rb
+entidad: lib/optima_build/personaje.rb
