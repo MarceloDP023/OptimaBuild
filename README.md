@@ -35,3 +35,4 @@ Una ruta se evalúa como superior a otra aplicando los siguientes **criterios ba
 * [User-journeys](./docs/journeys.md)
 * [Historias de Usuario](./docs/historias.md)
 * [Milestones](./docs/milestones.md)
+* [Modelado del Dominio](./docs/modelado_problema.md)
