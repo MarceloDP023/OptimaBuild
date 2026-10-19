@@ -1,0 +1,28 @@
+module OptimaBuild
+  class RequisitosTalento
+    attr_reader :puntos_rama, :talento_requerido_id, :rango_requerido
+
+    def initialize(puntos_rama: 0, talento_requerido_id: nil, rango_requerido: nil)
+
+      if puntos_rama < 0
+        raise ArgumentError, "Los puntos requeridos en la rama no pueden ser negativos"
+      end
+
+      if talento_requerido_id == nil
+        if rango_requerido != nil
+          raise ArgumentError, "No puede existir un rango requerido sin un talento requerido"
+        end
+      end
+
+      if rango_requerido != nil
+        if rango_requerido <= 0
+          raise ArgumentError, "El rango requerido debe ser mayor que cero"
+        end
+      end
+
+      @puntos_rama = puntos_rama
+      @talento_requerido_id = talento_requerido_id
+      @rango_requerido = rango_requerido
+    end
+  end
+end
