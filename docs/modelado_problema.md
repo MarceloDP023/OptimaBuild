@@ -1,115 +1,68 @@
-La HU001 plantea la necesidad de ayudar a un jugador que acaba de desbloquear su primer punto de talento a decidir cómo invertirlo en función del rol que quiere desempeñar.
+# Modelado del problema — OptimaBuild
 
-Para poder abordar este problema se ha realizado un modelado inicial del dominio siguiendo DDD, identificando los conceptos principales, sus relaciones y las restricciones que deben mantenerse.
+## 1. Descripción del problema
 
-Este issue reúne las decisiones tomadas en los distintos issues derivados de HU001 y sirve como visión conjunta del modelo correspondiente al Milestone 0.
+OptimaBuild permite crear y gestionar configuraciones de talentos de personajes de un videojuego.
 
----
+Cada personaje pertenece a una clase que determina su árbol de talentos. Este árbol se divide en tres ramas de especialización, cuyos talentos pueden desbloquearse mediante la asignación de puntos, respetando sus requisitos y rangos máximos.
 
-## Criterios de modelado
+El objetivo es facilitar la creación de configuraciones válidas y su optimización según el rol deseado.
 
-Para realizar el modelo se han seguido los siguientes criterios:
+## 2. Entidades
 
-- **Entidad**: concepto con identidad propia cuyo estado puede evolucionar durante su ciclo de vida.
-- **Objeto valor**: concepto definido por sus datos y que no necesita identidad propia.
-- **Agregado**: conjunto de entidades y objetos valor que deben mantenerse coherentes como una unidad.
-- Los objetos del dominio deben impedir, en la medida de lo posible, que puedan construirse estados inválidos.
-- Al utilizar Ruby, los constructores comprueban explícitamente los tipos de los datos recibidos.
-- Las relaciones entre conceptos solo aceptan objetos del tipo de dominio esperado.
-- Se aplica el principio **SSOT (Single Source of Truth)** para evitar mantener información duplicada que pueda quedar desincronizada.
-- Los valores que pueden calcularse a partir del estado existente se derivan en lugar de almacenarse de forma redundante.
-- No se añaden identificadores artificiales cuando no son necesarios dentro del dominio.
+### Personaje
+- **Identificador:** `idPersonaje`
+- **Atributos:** nombre, nivel, clase, talentos asignados y rol objetivo.
+- **Responsabilidad:** gestionar la configuración de talentos y garantizar que la distribución de puntos sea válida.
 
----
+### ClasePersonaje
+- **Identificador:** `idClase`
+- **Atributos:** nombre, descripción y árbol de talentos.
+- **Responsabilidad:** determinar el árbol de talentos disponible para los personajes de esa clase.
 
-## Modelo general
+### RamaEspecializacion
+- **Identificador:** `idRama`
+- **Atributos:** nombre y conjunto de talentos.
+- **Responsabilidad:** organizar los talentos de una especialización.
 
-```text
-Personaje
-├── ClasePersonaje
-│   └── ArbolTalentos
-│       ├── RamaEspecializacion
-│       │   └── Talento
-│       │       ├── RangoTalento
-│       │       ├── PosicionTalento
-│       │       └── RequisitosTalento
-│       ├── RamaEspecializacion
-│       └── RamaEspecializacion
-├── Nivel
-└── RolObjetivo
-```
+### Talento
+- **Identificador:** `idTalento`
+- **Atributos:** nombre, descripción, rango máximo, posición y requisitos.
+- **Responsabilidad:** representar una habilidad que puede desbloquearse o mejorarse.
 
-## Clasificación DDD de los conceptos
+## 3. Objetos de valor
 
-Durante el análisis de HU001 se han identificado los conceptos del dominio y se han clasificado como **entidades**, **objetos valor** y **agregados**.
+### RangoTalento
+Representa los puntos asignados a un talento y su rango máximo permitido.
 
-La clasificación se ha realizado atendiendo a si el concepto necesita conservar una identidad propia, si queda definido únicamente por sus valores y qué objetos deben mantenerse coherentes como una unidad.
+### PosicionTalento
+Define la posición de un talento dentro de su rama mediante fila y columna.
 
-### Entidades
+### RequisitosTalento
+Establece las condiciones necesarias para desbloquear un talento, como puntos mínimos invertidos o talentos previos.
 
-#### `Personaje`
+### RolObjetivo
+Representa el rol que se desea priorizar al construir una configuración.
 
-`Personaje` se identifica como una **entidad**.
+## 4. Agregados
 
-Dos personajes pueden pertenecer a la misma clase, tener el mismo nivel, el mismo rol y una distribución idéntica de talentos, pero siguen representando personajes diferentes dentro del dominio.
+### Agregado Personaje
+- **Raíz:** `Personaje`.
+- Gestiona la distribución de puntos y garantiza la validez de la configuración.
+- Consulta las definiciones de talentos asociadas a su clase.
 
-Además, su estado evoluciona durante la progresión.
+### Agregado ClasePersonaje
+- **Raíz:** `ClasePersonaje`.
+- Contiene la definición del árbol de talentos, sus ramas y talentos.
+- Garantiza la coherencia de la estructura del árbol.
 
-Mantiene:
+## 5. Fuente única de verdad (SSOT)
 
-- La clase a la que pertenece.
-- Su nivel actual.
-- Su rol objetivo.
+Para evitar inconsistencias:
 
-Los puntos de talento disponibles no se almacenan directamente, sino que se calculan a partir del nivel y de los puntos ya invertidos.
+- La definición de los talentos se mantiene en el árbol asociado a `ClasePersonaje`.
+- Los puntos asignados se almacenan en la configuración de cada `Personaje`.
+- Los puntos gastados y restantes se calculan a partir de la distribución y de los puntos disponibles.
+- Los requisitos y rangos máximos se consultan desde la definición de cada talento.
 
-`Personaje` actúa además como **raíz del agregado principal** del modelo.
-
-#### `Talento`
-
-`Talento` se identifica como una **entidad**.
-
-Cada talento representa un elemento concreto dentro del árbol y dispone de un identificador que permite distinguirlo del resto.
-
-Su estado puede cambiar durante la progresión, principalmente mediante su rango actual, pero continúa representando el mismo talento.
-
-Mantiene:
-
-- Identificador.
-- Nombre.
-- `RangoTalento`.
-- `PosicionTalento`.
-- `RequisitosTalento`.
-
-#### `RamaEspecializacion`
-
-`RamaEspecializacion` se identifica como una **entidad**.
-
-Cada rama representa una especialización concreta dentro del árbol de talentos.
-
-Mantiene:
-
-- Identificador.
-- Nombre.
-- Conjunto de talentos.
-
-La rama actúa como fuente de verdad sobre los talentos que contiene.
-
----
-
-### Objetos valor
-
-#### `RangoTalento`
-
-`RangoTalento` se identifica como un **objeto valor**.
-
-No necesita identidad propia. Lo relevante son sus valores:
-
-- Rango actual.
-- Rango máximo.
-
-Debe cumplirse:
-
-```text
-0 <= rango_actual <= rango_maximo
-rango_maximo > 0
+De esta forma, varios personajes pueden compartir una misma clase sin duplicar las definiciones de sus talentos.
