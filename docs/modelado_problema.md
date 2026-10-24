@@ -2,7 +2,7 @@
 
 ## 1. Descripción del problema
 
-OptimaBuild permite crear y gestionar configuraciones de talentos de personajes de un videojuego.
+OptimaBuild permite crear y gestionar configuraciones de talentos de personajes de un videojuego (Concretamente del WOW (world of warcraft)).
 
 Cada personaje pertenece a una clase que determina su árbol de talentos. Este árbol se divide en tres ramas de especialización, cuyos talentos pueden desbloquearse mediante la asignación de puntos, respetando sus requisitos y rangos máximos.
 
@@ -64,5 +64,3 @@ Para evitar inconsistencias:
 - Los puntos asignados se almacenan en la configuración de cada `Personaje`.
 - Los puntos gastados y restantes se calculan a partir de la distribución y de los puntos disponibles.
 - Los requisitos y rangos máximos se consultan desde la definición de cada talento.
-
-De esta forma, varios personajes pueden compartir una misma clase sin duplicar las definiciones de sus talentos.
