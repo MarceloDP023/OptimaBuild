@@ -27,6 +27,14 @@ module OptimaBuild
         raise ArgumentError, 'El rango actual debe ser un número entero' unless rango_actual.is_a?(Integer)
 
         raise ArgumentError, 'El rango actual no puede ser negativo' if rango_actual.negative?
+
+        talento = buscar_talento(talento_id)
+
+        raise ArgumentError, 'El talento no pertenece a la clase del personaje' if talento.nil?
+
+        if rango_actual > talento.rango_maximo
+          raise ArgumentError, 'El rango actual no puede superar el rango máximo del talento'
+        end
       end
 
       @clase = clase
