@@ -6,9 +6,11 @@ module OptimaBuild
   class Personaje
     ROLES_VALIDOS = %i[tanque sanador dps].freeze
 
-    attr_reader :clase, :nivel, :rol_objetivo, :progreso_talentos
+    attr_reader :id
 
-    def initialize(clase:, nivel:, rol_objetivo:, progreso_talentos: {})
+    def initialize(id:, clase:, nivel:, rol_objetivo:, progreso_talentos: {})
+      raise ArgumentError, 'El identificador del personaje debe ser un número entero' unless id.is_a?(Integer)
+
       raise ArgumentError, 'La clase debe ser una ClasePersonaje' unless clase.is_a?(ClasePersonaje)
 
       raise ArgumentError, 'El nivel debe ser un número entero' unless nivel.is_a?(Integer)
@@ -22,21 +24,16 @@ module OptimaBuild
       raise ArgumentError, 'El progreso debe proporcionarse en un Hash' unless progreso_talentos.is_a?(Hash)
 
       progreso_talentos.each do |talento_id, rango_actual|
-        raise ArgumentError, 'El identificador del talento debe ser un número entero' unless talento_id.is_a?(Integer)
+        unless talento_id.is_a?(Integer)
+          raise ArgumentError, 'El identificador del talento debe ser un número entero'
+        end
 
         raise ArgumentError, 'El rango actual debe ser un número entero' unless rango_actual.is_a?(Integer)
 
         raise ArgumentError, 'El rango actual no puede ser negativo' if rango_actual.negative?
-
-        talento = buscar_talento(talento_id)
-
-        raise ArgumentError, 'El talento no pertenece a la clase del personaje' if talento.nil?
-
-        if rango_actual > talento.rango_maximo
-          raise ArgumentError, 'El rango actual no puede superar el rango máximo del talento'
-        end
       end
 
+      @id = id
       @clase = clase
       @nivel = nivel
       @rol_objetivo = rol_objetivo
