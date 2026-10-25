@@ -2,7 +2,6 @@
 
 module OptimaBuild
   class PosicionTalento
-    attr_reader :fila, :columna
 
     def initialize(fila:, columna:)
       raise ArgumentError, 'La columna debe ser un número entero' unless columna.is_a?(Integer)
