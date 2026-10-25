@@ -24,13 +24,25 @@ module OptimaBuild
       raise ArgumentError, 'El progreso debe proporcionarse en un Hash' unless progreso_talentos.is_a?(Hash)
 
       progreso_talentos.each do |talento_id, rango_actual|
-        unless talento_id.is_a?(Integer)
-          raise ArgumentError, 'El identificador del talento debe ser un número entero'
-        end
+        raise ArgumentError, 'El identificador del talento debe ser un número entero' unless talento_id.is_a?(Integer)
 
         raise ArgumentError, 'El rango actual debe ser un número entero' unless rango_actual.is_a?(Integer)
 
         raise ArgumentError, 'El rango actual no puede ser negativo' if rango_actual.negative?
+
+        puntos_invertidos = progreso_talentos.values.sum
+        puntos_totales = nivel - 9
+
+        if puntos_invertidos > puntos_totales
+          raise ArgumentError, 'No se pueden invertir más puntos de talento de los disponibles para el nivel'
+        end
+
+        puntos_invertidos = progreso_talentos.values.sum
+        puntos_totales = nivel - 9
+
+        if puntos_invertidos > puntos_totales
+          raise ArgumentError, 'No se pueden invertir más puntos de talento de los disponibles para el nivel'
+        end
       end
 
       @id = id

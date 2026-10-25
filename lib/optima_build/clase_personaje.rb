@@ -29,5 +29,9 @@ module OptimaBuild
     def hash
       [self.class, id].hash
     end
+
+    def talento(talento_id)
+      @arbol_talentos.talento(talento_id)
+    end
   end
 end

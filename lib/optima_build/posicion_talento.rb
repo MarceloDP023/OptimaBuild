@@ -2,7 +2,6 @@
 
 module OptimaBuild
   class PosicionTalento
-
     def initialize(fila:, columna:)
       raise ArgumentError, 'La columna debe ser un número entero' unless columna.is_a?(Integer)
       raise ArgumentError, 'La fila debe ser un número entero' unless fila.is_a?(Integer)

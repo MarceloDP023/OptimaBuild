@@ -12,8 +12,6 @@ module OptimaBuild
 
       raise ArgumentError, 'El nombre del talento debe ser una cadena de texto' unless nombre.is_a?(String)
 
-      raise ArgumentError, 'El talento debe tener un identificador' if id.nil?
-
       raise ArgumentError, 'El talento debe tener un nombre' if nombre.nil? || nombre.empty?
 
       raise ArgumentError, 'El rango máximo debe ser un número entero' unless rango_maximo.is_a?(Integer)
@@ -29,6 +27,10 @@ module OptimaBuild
       @rango_maximo = rango_maximo
       @posicion = posicion
       @requisitos = requisitos
+    end
+
+    def admite_rango?(rango)
+      rango <= @rango_maximo
     end
   end
 end

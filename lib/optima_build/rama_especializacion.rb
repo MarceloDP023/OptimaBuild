@@ -27,5 +27,9 @@ module OptimaBuild
       @nombre = nombre
       @talentos = talentos
     end
+
+    def talento(talento_id)
+      @talentos[talento_id]
+    end
   end
 end

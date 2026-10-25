@@ -4,7 +4,6 @@ require_relative 'rama_especializacion'
 
 module OptimaBuild
   class ArbolTalentos
-
     def initialize(ramas:)
       raise ArgumentError, 'Las ramas deben proporcionarse en un Hash' unless ramas.is_a?(Hash)
 
@@ -21,6 +20,15 @@ module OptimaBuild
       end
 
       @ramas = ramas
+    end
+
+    def talento(talento_id)
+      @ramas.each_value do |rama|
+        talento = rama.talento(talento_id)
+        return talento unless talento.nil?
+      end
+
+      nil
     end
   end
 end
