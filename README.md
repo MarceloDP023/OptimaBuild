@@ -43,4 +43,4 @@ Además, frente a otras alternativas consideradas como Rust, Ruby es un lenguaje
 * [User-journeys](./docs/journeys.md)
 * [Historias de Usuario](./docs/historias.md)
 * [Milestones](./docs/milestones.md)
-* [Modelado del Dominio](./docs/modelado_problema.md)
+
