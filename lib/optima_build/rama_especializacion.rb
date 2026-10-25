@@ -13,16 +13,19 @@ module OptimaBuild
 
       raise ArgumentError, 'La rama debe tener un nombre' if nombre.empty?
 
-      raise ArgumentError, 'Los talentos deben proporcionarse en un Array' unless talentos.is_a?(Array)
+      raise ArgumentError, 'Los talentos deben proporcionarse en un Hash' unless talentos.is_a?(Hash)
 
-      talentos.each do |talento|
+      talentos.each do |id, talento|
+        raise ArgumentError, 'El identificador del talento debe ser un número entero' unless id.is_a?(Integer)
+
         raise ArgumentError, 'Todos los elementos de la rama deben ser talentos' unless talento.is_a?(Talento)
+
+        raise ArgumentError, 'La clave debe coincidir con el identificador del talento' unless id == talento.id
       end
 
       @id = id
       @nombre = nombre
       @talentos = talentos
-      
     end
   end
 end
