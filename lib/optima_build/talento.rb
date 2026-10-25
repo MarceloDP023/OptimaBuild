@@ -29,14 +29,5 @@ module OptimaBuild
       @posicion = posicion
       @requisitos = requisitos
     end
-
-    def aumentar_rango
-      nuevo_rango = RangoTalento.new(
-        actual: @rango.actual + 1,
-        maximo: @rango.maximo
-      )
-
-      @rango = nuevo_rango
-    end
   end
 end
