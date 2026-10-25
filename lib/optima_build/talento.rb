@@ -6,9 +6,9 @@ require_relative 'requisitos_talento'
 
 module OptimaBuild
   class Talento
-    attr_reader :id, :nombre, :rango, :posicion, :requisitos
+    attr_reader :id, :nombre, :rango_maximo, :posicion, :requisitos
 
-    def initialize(id:, nombre:, rango:, posicion:, requisitos:)
+    def initialize(id:, nombre:, rango_maximo:, posicion:, requisitos:)
       raise ArgumentError, 'El identificador del talento debe ser un número entero' unless id.is_a?(Integer)
 
       raise ArgumentError, 'El nombre del talento debe ser una cadena de texto' unless nombre.is_a?(String)
@@ -17,7 +17,9 @@ module OptimaBuild
 
       raise ArgumentError, 'El talento debe tener un nombre' if nombre.nil? || nombre.empty?
 
-      raise ArgumentError, 'El rango debe ser un RangoTalento' unless rango.is_a?(RangoTalento)
+      raise ArgumentError, 'El rango máximo debe ser un número entero' unless rango_maximo.is_a?(Integer)
+
+      raise ArgumentError, 'El rango máximo debe ser mayor que cero' if rango_maximo <= 0
 
       raise ArgumentError, 'La posición debe ser una PosicionTalento' unless posicion.is_a?(PosicionTalento)
 
@@ -25,7 +27,7 @@ module OptimaBuild
 
       @id = id
       @nombre = nombre
-      @rango = rango
+      @rango_maximo = rango_maximo
       @posicion = posicion
       @requisitos = requisitos
     end
