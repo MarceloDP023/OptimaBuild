@@ -7,7 +7,7 @@ module OptimaBuild
     attr_reader :id
 
     def initialize(id:, nombre:, arbol_talentos:)
-      raise ArgumentError, 'El ID de la clase no puede estar vacío' if id.nil? || (id.respond_to?(:empty?) && id.empty?)
+      raise ArgumentError, 'El identificador de la clase debe ser un número entero' unless id.is_a?(Integer)
 
       raise ArgumentError, 'El nombre de la clase debe ser una cadena de texto' unless nombre.is_a?(String)
 
