@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'rango_talento'
 require_relative 'posicion_talento'
 require_relative 'requisitos_talento'
 
