@@ -4,7 +4,7 @@ require_relative 'talento'
 
 module OptimaBuild
   class RamaEspecializacion
-    attr_reader :id, :nombre, :talentos
+    attr_reader :id
 
     def initialize(id:, nombre:, talentos:)
       raise ArgumentError, 'El identificador de la rama debe ser un número entero' unless id.is_a?(Integer)
