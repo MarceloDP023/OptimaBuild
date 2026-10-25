@@ -4,7 +4,7 @@ require_relative 'arbol_talentos'
 
 module OptimaBuild
   class ClasePersonaje
-    attr_reader :id, :arbol_talentos
+    attr_reader :id
 
     def initialize(id:, nombre:, arbol_talentos:)
       raise ArgumentError, 'El ID de la clase no puede estar vacío' if id.nil? || (id.respond_to?(:empty?) && id.empty?)
