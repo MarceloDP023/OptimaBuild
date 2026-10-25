@@ -29,6 +29,14 @@ Una ruta se evalúa como superior a otra aplicando los siguientes **criterios ba
 4. **Respeto estricto del presupuesto por nivel:** Garantizar que en cada nivel individual (del 10 al 60) la asignación realizada es válida tanto respecto al umbral acumulado de rama como a las dependencias de habilidades previas, asegurando que no existan retrocesos ni estados temporales ilegales.
 5. **Alineación con el rol declarado:** Maximizar el peso de los nodos pertenecientes a la rama primaria asignada al rol (por ejemplo, daño sostenido frente a soporte), evaluando si el conjunto de habilidades activadas al nivel 60 concentra al menos el grueso del presupuesto de 51 puntos en la especialización objetivo.
 
+## Lenguaje de programación
+
+El proyecto se implementa en **Ruby**.
+
+La elección se debe a que Ruby es un lenguaje orientado a objetos que permite representar de forma directa las entidades y objetos valor identificados durante el modelado del dominio.
+
+Además, frente a otras alternativas consideradas como Rust, Ruby es un lenguaje con el que los integrantes del proyecto ya tienen experiencia previa.
+
 ## Documentación adicional
 * [Configuración establecida para el objetivo 0](./docs/configuracion.md)
 * [Imagen correspondiente al juego de rol hecho en clase](./docs/rolCliente.jpg)
