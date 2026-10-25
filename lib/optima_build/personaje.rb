@@ -30,19 +30,20 @@ module OptimaBuild
 
         raise ArgumentError, 'El rango actual no puede ser negativo' if rango_actual.negative?
 
-        puntos_invertidos = progreso_talentos.values.sum
-        puntos_totales = nivel - 9
+        talento = clase.talento(talento_id)
 
-        if puntos_invertidos > puntos_totales
-          raise ArgumentError, 'No se pueden invertir más puntos de talento de los disponibles para el nivel'
+        raise ArgumentError, 'El talento indicado no pertenece a la clase del personaje' if talento.nil?
+
+        unless talento.admite_rango?(rango_actual)
+          raise ArgumentError, 'El rango actual no puede superar el rango máximo del talento'
         end
+      end
 
-        puntos_invertidos = progreso_talentos.values.sum
-        puntos_totales = nivel - 9
+      puntos_invertidos = progreso_talentos.values.sum
+      puntos_totales = nivel - 9
 
-        if puntos_invertidos > puntos_totales
-          raise ArgumentError, 'No se pueden invertir más puntos de talento de los disponibles para el nivel'
-        end
+      if puntos_invertidos > puntos_totales
+        raise ArgumentError, 'No se pueden invertir más puntos de talento de los disponibles para el nivel'
       end
 
       @id = id
