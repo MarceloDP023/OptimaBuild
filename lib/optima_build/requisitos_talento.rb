@@ -2,7 +2,6 @@
 
 module OptimaBuild
   class RequisitosTalento
-    attr_reader :puntos_rama, :talento_requerido_id, :rango_requerido
 
     def initialize(puntos_rama: 0, talento_requerido_id: nil, rango_requerido: nil)
       unless puntos_rama.is_a?(Integer)
