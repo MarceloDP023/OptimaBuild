@@ -33,9 +33,18 @@ Una ruta se evalúa como superior a otra aplicando los siguientes **criterios ba
 
 El proyecto se implementa en **Ruby**.
 
-La elección se debe a que Ruby es un lenguaje orientado a objetos que permite representar de forma directa las entidades y objetos valor identificados durante el modelado del dominio.
+La elección se basa en las necesidades del dominio que se está modelando. OptimaBuild trabaja principalmente con entidades y objetos que mantienen un conjunto reducido de datos y deben garantizar determinadas invariantes durante su creación y relación entre ellos.
 
-Además, frente a otras alternativas consideradas como Rust, Ruby es un lenguaje con el que los integrantes del proyecto ya tienen experiencia previa.
+Ruby permite representar este modelo de forma directa mediante clases y constructores con argumentos nombrados, facilitando que cada objeto reciba únicamente la información necesaria y pueda validar su estado en el momento de crearse.
+
+Además, algunas características del lenguaje encajan directamente con decisiones tomadas en el modelo:
+
+- Los `Symbol` permiten representar valores cerrados del dominio, como los roles `:tanque`, `:sanador` y `:dps`.
+- Los `Hash` permiten indexar ramas, talentos y el progreso del personaje mediante sus identificadores, evitando búsquedas secuenciales y facilitando mantener una única correspondencia por identificador.
+- Las excepciones permiten impedir la creación de estados inválidos del dominio, como rangos de talento imposibles, niveles fuera de los límites permitidos o progresos incompatibles con la clase del personaje.
+- La sintaxis de Ruby permite expresar estas restricciones dentro de las propias clases del dominio sin requerir una infraestructura adicional.
+
+Por estas razones, Ruby permite mantener el modelo del dominio compacto y hacer explícitas sus reglas e invariantes, que constituyen el objetivo principal de este milestone.
 
 ## Documentación adicional
 * [Configuración establecida para el objetivo 0](./docs/configuracion.md)
