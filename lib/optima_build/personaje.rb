@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative 'clase_personaje'
-require_relative 'rol_objetivo'
 
 module OptimaBuild
   class Personaje
+    ROLES_VALIDOS = %i[tanque sanador dps].freeze
     attr_reader :clase, :nivel, :rol_objetivo
 
     def initialize(clase:, nivel:, rol_objetivo:)
@@ -14,7 +14,9 @@ module OptimaBuild
 
       raise ArgumentError, 'El nivel debe estar entre 10 y 60' if nivel < 10 || nivel > 60
 
-      raise ArgumentError, 'El rol debe ser un RolObjetivo' unless rol_objetivo.is_a?(RolObjetivo)
+      raise ArgumentError, 'El rol debe ser un símbolo' unless rol_objetivo.is_a?(Symbol)
+
+      raise ArgumentError, 'El rol indicado no es válido' unless ROLES_VALIDOS.include?(rol_objetivo)
 
       @clase = clase
       @nivel = nivel
