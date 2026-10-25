@@ -4,7 +4,6 @@ require_relative 'rama_especializacion'
 
 module OptimaBuild
   class ArbolTalentos
-    attr_reader :ramas
 
     def initialize(ramas:)
       raise ArgumentError, 'Las ramas deben proporcionarse en un Hash' unless ramas.is_a?(Hash)
