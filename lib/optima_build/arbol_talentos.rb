@@ -19,6 +19,12 @@ module OptimaBuild
         raise ArgumentError, 'La clave debe coincidir con el identificador de la rama' unless rama_id == rama.id
       end
 
+      ids_talentos = ramas.values.flat_map(&:ids_talentos)
+
+      if ids_talentos.uniq.length != ids_talentos.length
+        raise ArgumentError, 'Un identificador de talento no puede repetirse entre ramas'
+      end
+
       @ramas = ramas
     end
 

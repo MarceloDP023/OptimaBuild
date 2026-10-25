@@ -31,5 +31,9 @@ module OptimaBuild
     def talento(talento_id)
       @talentos[talento_id]
     end
+
+    def ids_talentos
+      @talentos.keys
+    end
   end
 end
