@@ -6,7 +6,7 @@ require_relative 'requisitos_talento'
 
 module OptimaBuild
   class Talento
-    attr_reader :id, :nombre, :rango_maximo, :posicion, :requisitos
+    attr_reader :id,
 
     def initialize(id:, nombre:, rango_maximo:, posicion:, requisitos:)
       raise ArgumentError, 'El identificador del talento debe ser un número entero' unless id.is_a?(Integer)
